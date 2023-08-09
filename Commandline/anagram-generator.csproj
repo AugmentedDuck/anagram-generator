@@ -12,7 +12,6 @@
     <None Remove="dictionaries\dansk.txt" />
     <None Remove="dictionaries\english.txt" />
     <None Remove="dictionaries\user.txt" />
-    <None Remove="LICENSE" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,9 +23,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="dictionaries\user.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="LICENSE">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
 
