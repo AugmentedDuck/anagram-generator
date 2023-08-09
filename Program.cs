@@ -4,29 +4,74 @@
     {
         static void Main()
         {
+            bool includeEnglish = false;
+            bool includeDanish = false;
+            bool includeUserWords = false;
+            
             Console.WriteLine("Welcome to the anagram generator");
+
+            while (!(includeDanish || includeUserWords || includeEnglish))
+            {
+                Console.WriteLine("Do you want to include the English dictionary? (Y/N)");
+                string englishConfermation = Console.ReadLine();
+
+                if (englishConfermation == "yes" || englishConfermation == "Y" || englishConfermation == "Yes" || englishConfermation == "y")
+                {
+                    includeEnglish = true;
+                }
+
+                Console.WriteLine("Do you want to include the Danish dictionary? (Y/N)");
+                string danishConfermation = Console.ReadLine();
+
+                if (danishConfermation == "yes" || danishConfermation == "Y" || danishConfermation == "Yes" || danishConfermation == "y")
+                {
+                    includeDanish = true;
+                }
+
+                Console.WriteLine("Do you want to include the User dictionary? (Y/N)");
+                string userConfermation = Console.ReadLine();
+
+                if (userConfermation == "yes" || userConfermation == "Y" || userConfermation == "Yes" || userConfermation == "y")
+                {
+                    includeUserWords = true;
+                }
+
+                if ( !(includeDanish || includeUserWords || includeEnglish) )
+                {
+                    Console.WriteLine("You need at least one dictionary to continue!");
+                }
+            }
+
             Console.WriteLine("Please write the input word(s):");
 
             string input = Console.ReadLine();
             string fixedInput = NormalizeString(input);
 
-            string[] words = ImportWords();
+            string[] words = ImportWords(includeEnglish, includeDanish, includeUserWords);
             string[] anagrams = AnagramFinder(fixedInput, words);
         }
 
-        static string[] ImportWords()
+        static string[] ImportWords(bool inEnglish, bool inDanish, bool includeUserWords)
         {
             string allWordsInString = "";
             string directory = "dictionaries";
 
-            string[] fileEntries = Directory.GetFiles(directory);
-            foreach (string fileName in fileEntries)
+            if (inEnglish)
             {
-                if (fileName.ToLower().EndsWith(".txt"))
-                {
-                    Console.WriteLine("Importing words from the " + fileName.Remove(0, directory.Length + 1) + " dictionary");
-                    allWordsInString += File.ReadAllText(fileName);
-                }
+                Console.WriteLine("Importing words from the English dictionary");
+                allWordsInString += File.ReadAllText(directory + "/english.txt") + "\n";
+            }
+            
+            if (inDanish)
+            {
+                Console.WriteLine("Importing words from the Danish dictionary");
+                allWordsInString += File.ReadAllText(directory + "/dansk.txt") + "\n";
+            }
+            
+            if (includeUserWords)
+            {
+                Console.WriteLine("Importing words from the User dictionary");
+                allWordsInString += File.ReadAllText(directory + "/user.txt") + "\n";
             }
 
             string[] words = allWordsInString.Split("\n");
@@ -100,7 +145,7 @@
                 indexOfOutput++;
             }
 
-            Console.WriteLine(outputWords.Length);
+            Console.WriteLine("Number of anagrams generated: " + outputWords.Length);
 
             return outputWords;
         }
