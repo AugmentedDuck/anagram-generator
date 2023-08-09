@@ -1,27 +1,25 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
     <TargetFramework>net7.0</TargetFramework>
-    <RootNamespace>anagram_generator</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="dictionaries\dansk.txt" />
-    <None Remove="dictionaries\english.txt" />
-    <None Remove="dictionaries\user.txt" />
+    <None Remove="Dictionaries\dansk.txt" />
+    <None Remove="Dictionaries\english.txt" />
+    <None Remove="Dictionaries\user.txt" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="dictionaries\dansk.txt">
+    <EmbeddedResource Include="Dictionaries\dansk.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="dictionaries\english.txt">
+    <EmbeddedResource Include="Dictionaries\english.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="dictionaries\user.txt">
+    <EmbeddedResource Include="Dictionaries\user.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
