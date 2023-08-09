@@ -1,4 +1,8 @@
-﻿namespace AnagramGenerator
+﻿using System;
+using System.IO;
+using System.Linq;
+
+namespace AnagramGenerator
 {
     public class Core
     {
@@ -25,7 +29,7 @@
                 allWordsInString += File.ReadAllText(directory + "/user.txt") + "\n";
             }
 
-            string[] words = allWordsInString.Split("\n");
+            string[] words = allWordsInString.Split('\n');
 
             string[] output = words.Distinct().ToArray();
 
