@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace AnagramGenerator
+﻿namespace AnagramGenerator
 {
     class Program
     {
