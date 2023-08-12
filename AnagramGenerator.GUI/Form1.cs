@@ -1,14 +1,8 @@
-﻿using AnagramGenerator;
+﻿using AnagramGenerator.Core;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+
 
 namespace GUI
 {
@@ -51,11 +45,11 @@ namespace GUI
             string inputString = textBox1.Text;
 
             string[] words = core.ImportWords(isEnglish, isDanish, useUserWords);
-            string[] anagrams = core.AnagramFinder(core.NormalizeString(inputString), words, useSingleWords);
+            string[] anagrams = core.AnagramFinder(core.NormalizeString(inputString), words, useSingleWords, 0);
 
             string anagramString = "";
 
-            foreach (string word in anagrams) 
+            foreach (string word in anagrams)
             {
                 anagramString += word + "\n";
             }

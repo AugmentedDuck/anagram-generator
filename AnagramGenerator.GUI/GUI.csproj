@@ -80,16 +80,16 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\Core\Core.cs" Link="Core.cs" />
+    <Compile Include="..\AnagramGenerator.Core\Core.cs" Link="Core.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="..\Core\Dictionaries\dansk.txt" Link="Dictionaries\dansk.txt">
+    <EmbeddedResource Include="..\AnagramGenerator.Core\Dictionaries\dansk.txt" Link="Dictionaries\dansk.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="..\Core\Dictionaries\english.txt" Link="Dictionaries\english.txt">
+    <EmbeddedResource Include="..\AnagramGenerator.Core\Dictionaries\english.txt" Link="Dictionaries\english.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
-    <EmbeddedResource Include="..\Core\Dictionaries\user.txt" Link="Dictionaries\user.txt">
+    <EmbeddedResource Include="..\AnagramGenerator.Core\Dictionaries\user.txt" Link="Dictionaries\user.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>
