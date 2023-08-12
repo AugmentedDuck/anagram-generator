@@ -2,7 +2,7 @@
 using System.IO;
 using System.Linq;
 
-namespace AnagramGenerator
+namespace AnagramGenerator.Core
 {
     public class Core
     {
@@ -41,7 +41,7 @@ namespace AnagramGenerator
             return String.Concat(inputString.Where(c => !Char.IsWhiteSpace(c))).ToLower();
         }
 
-        public string[] AnagramFinder(string inputString, string[] words, bool includeSingleLetters)
+        public string[] AnagramFinder(string inputString, string[] words, bool includeSingleLetters, int maxLevel)
         {
             string[] outputWords = Array.Empty<string>();
             int indexOfOutput = 0;
@@ -103,7 +103,103 @@ namespace AnagramGenerator
 
                 if (remainingLetters.Length > 0)
                 {
-                    string[] remainingAnagrams = AnagramFinder(remainingLetters, words, includeSingleLetters);
+                    string[] remainingAnagrams = { };
+
+                    if (maxLevel == 0)
+                    {
+                        remainingAnagrams = AnagramFinder(remainingLetters, words, includeSingleLetters, maxLevel);
+                    }
+                    else
+                    {
+
+                        remainingAnagrams = AnagramFinder(remainingLetters, words, includeSingleLetters, maxLevel, 1);
+                    }
+
+                    foreach (string anagram in remainingAnagrams)
+                    {
+                        Array.Resize(ref outputWords, outputWords.Length + 1);
+                        outputWords[indexOfOutput] = word + " " + anagram;
+                        indexOfOutput++;
+                    }
+                }
+
+                Array.Resize(ref outputWords, outputWords.Length + 1);
+                outputWords[indexOfOutput] = word;
+                indexOfOutput++;
+            }
+
+            return outputWords;
+        }
+
+        string[] AnagramFinder(string inputString, string[] words, bool includeSingleLetters, int maxLevel, int level)
+        {
+            if (maxLevel == level)
+            {
+                string[] output = { "" };
+                return output;
+            }
+
+            string[] outputWords = Array.Empty<string>();
+            int indexOfOutput = 0;
+
+            foreach (string word in words)
+            {
+                if (word.Length < 2 && (!(word == "a" && word == "e" && word == "i" && word == "o" && word == "u" && word == "y" && word == "æ" && word == "ø" && word == "å") || includeSingleLetters))
+                {
+                    continue;
+                }
+
+                char[] tempInput = new char[inputString.Length];
+
+                for (int i = 0; i < tempInput.Length; i++)
+                {
+                    tempInput[i] = inputString[i];
+                }
+
+                if (word.Length > tempInput.Length)
+                {
+                    continue;
+                }
+
+                int nonMatchingLetters = 0;
+
+                foreach (char letter in word)
+                {
+                    int indexInWord = 0;
+                    foreach (char checkLetter in tempInput)
+                    {
+                        if (letter == checkLetter)
+                        {
+                            tempInput[indexInWord] = ' ';
+                            break;
+                        }
+
+                        indexInWord++;
+
+                        if (indexInWord == tempInput.Length)
+                        {
+                            nonMatchingLetters++;
+                        }
+                    }
+                }
+
+                if (nonMatchingLetters != 0)
+                {
+                    continue;
+                }
+
+                string remainingLetters = "";
+
+                foreach (char letter in tempInput)
+                {
+                    remainingLetters += letter;
+                }
+
+                remainingLetters = NormalizeString(remainingLetters);
+
+                if (remainingLetters.Length > 0)
+                {
+                    string[] remainingAnagrams = AnagramFinder(remainingLetters, words, includeSingleLetters, maxLevel, level++);
 
                     foreach (string anagram in remainingAnagrams)
                     {
