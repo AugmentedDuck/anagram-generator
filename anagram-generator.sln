@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34003.232
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "anagram-generator", "Console\anagram-generator.csproj", "{4906A0A9-0666-4FA9-8FF9-0027773A8A5F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "AnagramGenerator.Core\Core.csproj", "{11421B57-173E-4A9C-B36C-A820F6C2227C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{C991B1B9-F9EF-4185-9A35-C7F41918ECE5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GUI", "AnagramGenerator.GUI\GUI.csproj", "{BD41EC72-5F39-4FE2-BF64-D54C03690C79}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GUI", "GUI\GUI.csproj", "{BD41EC72-5F39-4FE2-BF64-D54C03690C79}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Console", "AnagramGenerator.Console\Console.csproj", "{5B41E395-623E-4250-B416-262ADD62FE3A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PerformanceTester", "AnagramGenerator.PerformanceTester\PerformanceTester.csproj", "{0D2F3B11-E08E-4A5F-878D-3C6E4273E885}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,18 +17,22 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{4906A0A9-0666-4FA9-8FF9-0027773A8A5F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4906A0A9-0666-4FA9-8FF9-0027773A8A5F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4906A0A9-0666-4FA9-8FF9-0027773A8A5F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4906A0A9-0666-4FA9-8FF9-0027773A8A5F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C991B1B9-F9EF-4185-9A35-C7F41918ECE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C991B1B9-F9EF-4185-9A35-C7F41918ECE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C991B1B9-F9EF-4185-9A35-C7F41918ECE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C991B1B9-F9EF-4185-9A35-C7F41918ECE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11421B57-173E-4A9C-B36C-A820F6C2227C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11421B57-173E-4A9C-B36C-A820F6C2227C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11421B57-173E-4A9C-B36C-A820F6C2227C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11421B57-173E-4A9C-B36C-A820F6C2227C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BD41EC72-5F39-4FE2-BF64-D54C03690C79}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BD41EC72-5F39-4FE2-BF64-D54C03690C79}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD41EC72-5F39-4FE2-BF64-D54C03690C79}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD41EC72-5F39-4FE2-BF64-D54C03690C79}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B41E395-623E-4250-B416-262ADD62FE3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B41E395-623E-4250-B416-262ADD62FE3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B41E395-623E-4250-B416-262ADD62FE3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B41E395-623E-4250-B416-262ADD62FE3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D2F3B11-E08E-4A5F-878D-3C6E4273E885}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D2F3B11-E08E-4A5F-878D-3C6E4273E885}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D2F3B11-E08E-4A5F-878D-3C6E4273E885}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D2F3B11-E08E-4A5F-878D-3C6E4273E885}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
