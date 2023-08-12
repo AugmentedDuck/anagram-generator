@@ -1,8 +1,12 @@
-﻿namespace AnagramGenerator
+﻿using System.Diagnostics;
+using System.Text.RegularExpressions;
+using AnagramGenerator.Core;
+
+namespace AnagramGenerator
 {
     class Program
     {
-        static readonly Core core = new();
+        static readonly Core.Core core = new();
 
         static void Main()
         {
@@ -10,6 +14,7 @@
             bool includeDanish = false;
             bool includeUserWords = false;
             bool includeSingles = false;
+            int maxRecursion;
 
             Console.WriteLine("Welcome to the anagram generator");
 
@@ -52,18 +57,37 @@
                 includeSingles = true;
             }
 
+            Console.WriteLine("Maximum amount of words per solution, 0 to disable (3):");
+            string intResponse = Console.ReadLine();
+
+            Regex numbersOnly = new("^[0-9]+$");
+
+            if (!(numbersOnly.IsMatch(intResponse) && intResponse != null))
+            {
+                Console.WriteLine("Not a valid choice, remaining as default");
+                intResponse = "3";
+            }
+
+            maxRecursion = Convert.ToInt32(intResponse);
+
             Console.WriteLine("Please write the input word(s):");
 
             string input = Console.ReadLine();
             string fixedInput = core.NormalizeString(input);
 
+
             string[] words = core.ImportWords(includeEnglish, includeDanish, includeUserWords);
-            string[] anagrams = core.AnagramFinder(fixedInput, words, includeSingles);
+
+            Stopwatch stopwatch = Stopwatch.StartNew();
+            string[] anagrams = core.AnagramFinder(fixedInput, words, includeSingles, maxRecursion);
+            stopwatch.Stop();
 
             foreach (string word in anagrams)
             {
                 Console.WriteLine(word);
             }
+
+            Console.WriteLine("This took: " + stopwatch.ElapsedMilliseconds + "ms");
         }
     }
 }
