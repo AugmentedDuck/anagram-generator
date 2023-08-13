@@ -24,12 +24,13 @@ namespace PerformanceTester
 
             string testResults = "";
             
+            Directory.CreateDirectory("Results");
+            
             testResults += Tester(testWords, 1);
             testResults += Tester(testWords, 2);
             testResults += Tester(testWords, 3);
 
-            Directory.CreateDirectory("Results");
-            File.WriteAllText($"Results/{DateTime.Now}-Results.txt", testResults);
+            File.WriteAllText($"Results/{DateTime.Today}-Results.txt", testResults);
         }
 
         static string Tester(string[] testWords, int recursionLevel)
@@ -38,6 +39,10 @@ namespace PerformanceTester
             string[] words = core.ImportWords(true, true, true);
 
             string tempTestResults = "";
+            string testResultLength = "Word Size:\n";
+            string testResultLevel = "Recursion nr.\n";
+            string testResultTime = "Time (ms):\n";
+
             foreach (string word in testWords)
             {
                 Stopwatch stopwatch = Stopwatch.StartNew();
@@ -46,9 +51,14 @@ namespace PerformanceTester
 
                 tempTestResults += $"{word.Length}:{recursionLevel} - {stopwatch.ElapsedMilliseconds} ms\n";
                 Console.WriteLine(tempTestResults);
+                testResultLength += $"{word.Length}\n";
+                testResultLevel += $"{recursionLevel}\n";
+                testResultTime += $"{stopwatch.ElapsedMilliseconds}\n";
+                Directory.CreateDirectory("Results");
+                File.WriteAllText($"Results/Results.txt", $"{testResultLength}\n\n{testResultLevel}\n\n{testResultTime}");
             }
 
-            return tempTestResults;
+            return $"{testResultLength}\n\n{testResultLevel}\n\n{testResultTime}";
         }
     }
 }
