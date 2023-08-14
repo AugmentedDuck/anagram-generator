@@ -8,8 +8,6 @@ namespace PerformanceTester
 
         static void Main(string[] args)
         {
-
-            Core core = new Core();
             string[] testWords = { "text", "full", "pour", "idea", "pain", "palm", "tire", "flow", "walk", "site",
                                     "shave", "jewel", "shout", "sugar", "march", "knock", "print", "model", "chaos", "lease",
                                     "garage", "cheese", "murder", "agenda", "method", "sodium", "agency", "desert", "pardon", "affair",
@@ -35,7 +33,7 @@ namespace PerformanceTester
 
         static string Tester(string[] testWords, int recursionLevel)
         {
-            Core core = new Core();
+            Core core = new();
             string[] words = core.ImportWords(true, true, true);
 
             string tempTestResults = "";

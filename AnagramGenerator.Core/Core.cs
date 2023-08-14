@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace AnagramGenerator.Core
 {
@@ -43,8 +44,7 @@ namespace AnagramGenerator.Core
 
         public string[] AnagramFinder(string inputString, string[] words, bool includeSingleLetters, int maxLevel)
         {
-            string[] outputWords = Array.Empty<string>();
-            int indexOfOutput = 0;
+            List<string> outputWords = new List<string>();
 
             foreach (string word in words)
             {
@@ -53,37 +53,25 @@ namespace AnagramGenerator.Core
                     continue;
                 }
 
-                char[] tempInput = new char[inputString.Length];
-
-                for (int i = 0; i < tempInput.Length; i++)
-                {
-                    tempInput[i] = inputString[i];
-                }
-
-                if (word.Length > tempInput.Length)
+                if (word.Length > inputString.Length)
                 {
                     continue;
                 }
 
-                int nonMatchingLetters = 0;
+                char[] tempInput = inputString.ToCharArray();
 
+                int nonMatchingLetters = 0;
+                
                 foreach (char letter in word)
                 {
-                    int indexInWord = 0;
-                    foreach (char checkLetter in tempInput)
+                    int indexInWord = Array.IndexOf(tempInput, letter);
+                    if (indexInWord != -1)
                     {
-                        if (letter == checkLetter)
-                        {
-                            tempInput[indexInWord] = ' ';
-                            break;
-                        }
-
-                        indexInWord++;
-
-                        if (indexInWord == tempInput.Length)
-                        {
-                            nonMatchingLetters++;
-                        }
+                        tempInput[indexInWord] = ' ';
+                    }
+                    else
+                    {
+                        nonMatchingLetters++;
                     }
                 }
 
@@ -92,13 +80,7 @@ namespace AnagramGenerator.Core
                     continue;
                 }
 
-                string remainingLetters = "";
-
-                foreach (char letter in tempInput)
-                {
-                    remainingLetters += letter;
-                }
-
+                string remainingLetters = new string(tempInput).Replace(" ", "");
                 remainingLetters = NormalizeString(remainingLetters);
 
                 if (remainingLetters.Length > 0)
@@ -111,36 +93,29 @@ namespace AnagramGenerator.Core
                     }
                     else
                     {
-
                         remainingAnagrams = AnagramFinder(remainingLetters, words, includeSingleLetters, maxLevel, 1);
                     }
 
                     foreach (string anagram in remainingAnagrams)
                     {
-                        Array.Resize(ref outputWords, outputWords.Length + 1);
-                        outputWords[indexOfOutput] = word + " " + anagram;
-                        indexOfOutput++;
+                        outputWords.Add(word + " " + anagram);
                     }
                 }
 
-                Array.Resize(ref outputWords, outputWords.Length + 1);
-                outputWords[indexOfOutput] = word;
-                indexOfOutput++;
+                outputWords.Add(word);
             }
 
-            return outputWords;
+            return outputWords.ToArray();
         }
 
         string[] AnagramFinder(string inputString, string[] words, bool includeSingleLetters, int maxLevel, int level)
         {
             if (maxLevel == level)
             {
-                string[] output = { "" };
-                return output;
+                return new string[] { "" };
             }
 
-            string[] outputWords = Array.Empty<string>();
-            int indexOfOutput = 0;
+            List<string> outputWords = new List<string>();
 
             foreach (string word in words)
             {
@@ -149,37 +124,25 @@ namespace AnagramGenerator.Core
                     continue;
                 }
 
-                char[] tempInput = new char[inputString.Length];
-
-                for (int i = 0; i < tempInput.Length; i++)
-                {
-                    tempInput[i] = inputString[i];
-                }
-
-                if (word.Length > tempInput.Length)
+                if (word.Length > inputString.Length)
                 {
                     continue;
                 }
+
+                char[] tempInput = inputString.ToCharArray();
 
                 int nonMatchingLetters = 0;
 
                 foreach (char letter in word)
                 {
-                    int indexInWord = 0;
-                    foreach (char checkLetter in tempInput)
+                    int indexInWord = Array.IndexOf(tempInput, letter);
+                    if (indexInWord != -1)
                     {
-                        if (letter == checkLetter)
-                        {
-                            tempInput[indexInWord] = ' ';
-                            break;
-                        }
-
-                        indexInWord++;
-
-                        if (indexInWord == tempInput.Length)
-                        {
-                            nonMatchingLetters++;
-                        }
+                        tempInput[indexInWord] = ' ';
+                    }
+                    else
+                    {
+                        nonMatchingLetters++;
                     }
                 }
 
@@ -188,13 +151,7 @@ namespace AnagramGenerator.Core
                     continue;
                 }
 
-                string remainingLetters = "";
-
-                foreach (char letter in tempInput)
-                {
-                    remainingLetters += letter;
-                }
-
+                string remainingLetters = new string(tempInput).Replace(" ", "");
                 remainingLetters = NormalizeString(remainingLetters);
 
                 if (remainingLetters.Length > 0)
@@ -203,18 +160,14 @@ namespace AnagramGenerator.Core
 
                     foreach (string anagram in remainingAnagrams)
                     {
-                        Array.Resize(ref outputWords, outputWords.Length + 1);
-                        outputWords[indexOfOutput] = word + " " + anagram;
-                        indexOfOutput++;
+                        outputWords.Add(word + " " + anagram);
                     }
                 }
 
-                Array.Resize(ref outputWords, outputWords.Length + 1);
-                outputWords[indexOfOutput] = word;
-                indexOfOutput++;
+                outputWords.Add(word);
             }
 
-            return outputWords;
+            return outputWords.ToArray();
         }
     }
 }
