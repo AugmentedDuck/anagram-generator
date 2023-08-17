@@ -22,13 +22,12 @@ namespace PerformanceTester
 
             string testResults = "";
             
-            Directory.CreateDirectory("Results");
-            
             testResults += Tester(testWords, 1);
             testResults += Tester(testWords, 2);
             testResults += Tester(testWords, 3);
-
-            File.WriteAllText($"Results/{DateTime.Today}-Results.txt", testResults);
+            //testResults += Tester(testWords, 4);
+            //testResults += Tester(testWords, 5);
+            //testResults += Tester(testWords, 0);
         }
 
         static string Tester(string[] testWords, int recursionLevel)
@@ -49,11 +48,13 @@ namespace PerformanceTester
 
                 tempTestResults += $"{word.Length}:{recursionLevel} - {stopwatch.ElapsedMilliseconds} ms\n";
                 Console.WriteLine(tempTestResults);
+                
                 testResultLength += $"{word.Length}\n";
                 testResultLevel += $"{recursionLevel}\n";
                 testResultTime += $"{stopwatch.ElapsedMilliseconds}\n";
+
                 Directory.CreateDirectory("Results");
-                File.WriteAllText($"Results/Results.txt", $"{testResultLength}\n\n{testResultLevel}\n\n{testResultTime}");
+                File.WriteAllText($"Results/Results{recursionLevel}.txt", $"{testResultLength}\n\n{testResultLevel}\n\n{testResultTime}");
             }
 
             return $"{testResultLength}\n\n{testResultLevel}\n\n{testResultTime}";
