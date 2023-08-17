@@ -36,6 +36,9 @@
             this.button1 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
+            this.label2 = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             this.SuspendLayout();
             // 
             // checkBox1
@@ -111,12 +114,36 @@
             // textBox1
             // 
             this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.textBox1.Location = new System.Drawing.Point(12, 469);
+            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F);
+            this.textBox1.Location = new System.Drawing.Point(12, 456);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(300, 39);
+            this.textBox1.Size = new System.Drawing.Size(382, 48);
             this.textBox1.TabIndex = 6;
             this.textBox1.Text = "Input string";
+            // 
+            // numericUpDown2
+            // 
+            this.numericUpDown2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.numericUpDown2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.numericUpDown2.Location = new System.Drawing.Point(534, 143);
+            this.numericUpDown2.Name = "numericUpDown2";
+            this.numericUpDown2.Size = new System.Drawing.Size(312, 35);
+            this.numericUpDown2.TabIndex = 8;
+            this.numericUpDown2.Value = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.label2.Location = new System.Drawing.Point(343, 111);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(503, 29);
+            this.label2.TabIndex = 9;
+            this.label2.Text = "How many words in answers? (0 for unlimited)";
             // 
             // Form1
             // 
@@ -125,6 +152,8 @@
             this.BackColor = System.Drawing.SystemColors.ControlDark;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.ClientSize = new System.Drawing.Size(879, 524);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.numericUpDown2);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button1);
@@ -137,6 +166,7 @@
             this.MinimumSize = new System.Drawing.Size(750, 255);
             this.Name = "Form1";
             this.Text = "Anagram Generator";
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -151,6 +181,8 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.NumericUpDown numericUpDown2;
+        private System.Windows.Forms.Label label2;
     }
 }
 

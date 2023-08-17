@@ -1,5 +1,6 @@
 ﻿using AnagramGenerator.Core;
 using System;
+using System.ComponentModel;
 using System.IO;
 using System.Windows.Forms;
 
@@ -43,9 +44,10 @@ namespace GUI
         private void GenerateAnagrams(object sender, EventArgs e)
         {
             string inputString = textBox1.Text;
+            int levels = Convert.ToInt16(numericUpDown2.Value);
 
             string[] words = core.ImportWords(isEnglish, isDanish, useUserWords);
-            string[] anagrams = core.AnagramFinder(core.NormalizeString(inputString), words, useSingleWords, 0);
+            string[] anagrams = core.AnagramFinder(core.NormalizeString(inputString), words, useSingleWords, levels);
 
             string anagramString = "";
 
