@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Collections.Generic;
+using System.Text;
 
 namespace AnagramGenerator.Core
 {
@@ -45,10 +46,11 @@ namespace AnagramGenerator.Core
         public string[] AnagramFinder(string inputString, string[] words, bool includeSingleLetters, int maxLevel)
         {
             List<string> outputWords = new List<string>();
+            Dictionary<char, int> inputCounts = CountCharacters(NormalizeString(inputString));
 
             foreach (string word in words)
             {
-                if (word.Length < 2 && (!(word == "a" && word == "e" && word == "i" && word == "o" && word == "u" && word == "y" && word == "æ" && word == "ø" && word == "å") || includeSingleLetters))
+                if (word.Length < 2 && !includeSingleLetters)
                 {
                     continue;
                 }
@@ -58,30 +60,15 @@ namespace AnagramGenerator.Core
                     continue;
                 }
 
-                char[] tempInput = inputString.ToCharArray();
+                Dictionary<char, int> wordCounts = CountCharacters(word);
 
-                int nonMatchingLetters = 0;
-                
-                foreach (char letter in word)
-                {
-                    int indexInWord = Array.IndexOf(tempInput, letter);
-                    if (indexInWord != -1)
-                    {
-                        tempInput[indexInWord] = ' ';
-                    }
-                    else
-                    {
-                        nonMatchingLetters++;
-                    }
-                }
-
-                if (nonMatchingLetters != 0)
+                if (!IsSubset(inputCounts, wordCounts))
                 {
                     continue;
                 }
 
-                string remainingLetters = new string(tempInput).Replace(" ", "");
-                remainingLetters = NormalizeString(remainingLetters);
+                Dictionary<char, int> remainingCounts = SubstractCharacterCounts(inputCounts, wordCounts);
+                string remainingLetters = GetStringFromCharacterCounts(remainingCounts);
 
                 if (remainingLetters.Length > 0)
                 {
@@ -108,6 +95,9 @@ namespace AnagramGenerator.Core
             return outputWords.ToArray();
         }
 
+
+        private Dictionary<string, string[]> memo = new Dictionary<string, string[]>();
+
         string[] AnagramFinder(string inputString, string[] words, bool includeSingleLetters, int maxLevel, int level)
         {
             if (maxLevel == level)
@@ -115,11 +105,19 @@ namespace AnagramGenerator.Core
                 return new string[] { "" };
             }
 
+            string memoKey = $"{inputString}_{level}";
+            if (memo.ContainsKey(memoKey))
+            {
+                return memo[memoKey];
+            }
+            
             List<string> outputWords = new List<string>();
+            Dictionary<char, int> inputCounts = CountCharacters(NormalizeString(inputString));
+
 
             foreach (string word in words)
             {
-                if (word.Length < 2 && (!(word == "a" && word == "e" && word == "i" && word == "o" && word == "u" && word == "y" && word == "æ" && word == "ø" && word == "å") || includeSingleLetters))
+                if (word.Length < 2 && !includeSingleLetters)
                 {
                     continue;
                 }
@@ -129,45 +127,91 @@ namespace AnagramGenerator.Core
                     continue;
                 }
 
-                char[] tempInput = inputString.ToCharArray();
+                Dictionary<char, int> wordCounts = CountCharacters(word);
 
-                int nonMatchingLetters = 0;
-
-                foreach (char letter in word)
-                {
-                    int indexInWord = Array.IndexOf(tempInput, letter);
-                    if (indexInWord != -1)
-                    {
-                        tempInput[indexInWord] = ' ';
-                    }
-                    else
-                    {
-                        nonMatchingLetters++;
-                    }
-                }
-
-                if (nonMatchingLetters != 0)
+                if (!IsSubset(inputCounts, wordCounts))
                 {
                     continue;
                 }
 
-                string remainingLetters = new string(tempInput).Replace(" ", "");
-                remainingLetters = NormalizeString(remainingLetters);
+                Dictionary<char, int> remainingCounts = SubstractCharacterCounts(inputCounts, wordCounts);
+                string remainingLetters = GetStringFromCharacterCounts(remainingCounts);
 
-                if (remainingLetters.Length > 0)
+                string[] remainingAnagrams = AnagramFinder(remainingLetters, words, includeSingleLetters, maxLevel, level++);
+
+                foreach (string anagram in remainingAnagrams)
                 {
-                    string[] remainingAnagrams = AnagramFinder(remainingLetters, words, includeSingleLetters, maxLevel, level++);
-
-                    foreach (string anagram in remainingAnagrams)
-                    {
-                        outputWords.Add(word + " " + anagram);
-                    }
+                    outputWords.Add(word + " " + anagram);
                 }
+                
 
                 outputWords.Add(word);
             }
 
+            string[] result = outputWords.ToArray();
+            memo[memoKey] = result;
             return outputWords.ToArray();
+        }
+
+        private Dictionary<char, int> SubstractCharacterCounts(Dictionary<char, int> setCounts, Dictionary<char, int> wordCounts)
+        {
+            Dictionary<char, int> remainingCounts = new Dictionary<char, int>(setCounts);
+            foreach (var kvp in wordCounts)
+            {
+                if (remainingCounts.ContainsKey(kvp.Key))
+                {
+                    remainingCounts[kvp.Key] -= kvp.Value;
+                    if (remainingCounts[kvp.Key] == 0)
+                    {
+                        remainingCounts.Remove(kvp.Key);
+                    }
+                }
+            }
+            return remainingCounts;
+        }
+
+        private Dictionary<char, int> CountCharacters(string word)
+        {
+            Dictionary<char, int> counts = new Dictionary<char, int>();
+            foreach (char letter in word) 
+            {
+                if (counts.ContainsKey(letter))
+                {
+                    counts[letter]++;
+                }
+                else 
+                { 
+                    counts[letter] = 1; 
+                }
+            }
+            return counts;
+        }
+
+        private string GetStringFromCharacterCounts(Dictionary<char, int> counts)
+        {
+            StringBuilder sb = new StringBuilder();
+            
+            foreach (var kvp in counts)
+            {
+                for (int i = 0; i < kvp.Value; i++)
+                {
+                    sb.Append(kvp.Key);
+                }
+            }
+
+            return sb.ToString();
+        }
+
+        private bool IsSubset(Dictionary<char, int> setCounts, Dictionary<char, int> wordCounts)
+        {
+            foreach (var kvp in wordCounts)
+            {
+                if (!setCounts.ContainsKey(kvp.Key) || setCounts[kvp.Key] < kvp.Value)
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }
