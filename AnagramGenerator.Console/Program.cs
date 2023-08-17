@@ -50,7 +50,7 @@ namespace AnagramGenerator
                 }
             }
 
-            Console.WriteLine("Are non-vowel single letter words considered words? (Y/N)");
+            Console.WriteLine("Are single letter words considered words? (Y/N)");
             string singleLetterWords = Console.ReadLine();
             if (singleLetterWords == "yes" || singleLetterWords == "Y" || singleLetterWords == "Yes" || singleLetterWords == "y")
             {
@@ -88,6 +88,8 @@ namespace AnagramGenerator
             }
 
             Console.WriteLine("This took: " + stopwatch.ElapsedMilliseconds + "ms");
+
+            string exit = Console.ReadLine();
         }
     }
 }
